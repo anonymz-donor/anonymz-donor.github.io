@@ -254,7 +254,7 @@
                     if (user) {
                         window.appState.user = user;
                         let roleBadge = window.isAdmin() ? `<span class="bg-accent text-white px-1.5 py-0.5 rounded text-[10px] ml-2">ADMIN</span>` : `<span class="bg-border text-white px-1.5 py-0.5 rounded text-[10px] ml-2">GUEST</span>`;
-                        document.getElementById('auth-status').innerHTML = `UID: <span class="text-accent font-mono-text">${user.uid.substring(0,8)}</span> ${roleBadge}`;
+                        document.getElementById('auth-status').innerHTML = `UID: <span class="text-accent font-mono-text">${user.uid}</span> ${roleBadge}`;
                         checkAdminMenu(); setupRealtimeListeners();
                     }
                 });
