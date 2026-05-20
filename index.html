@@ -58,8 +58,17 @@
         .trophy-container { filter: drop-shadow(0 0 15px var(--accent-muted)); animation: pulse-glow 3s infinite alternate; transition: transform 0.3s; }
         .trophy-svg { width: 250px; height: 250px; fill: var(--accent-color); }
         
+        /* ซ่อน Scrollbar สำหรับ #bracket-wrapper แต่ยังเลื่อนได้ปกติ */
+        #bracket-wrapper::-webkit-scrollbar {
+            display: none; /* สำหรับ Chrome, Safari และ Opera */
+        }
+        #bracket-wrapper {
+            -ms-overflow-style: none;  /* สำหรับ IE และ Edge */
+            scrollbar-width: none;  /* สำหรับ Firefox */
+        }
+
         /* Drag Scroll Styling */
-        #bracket-wrapper { cursor: grab; overflow: auto; width: 100%; height: 100%; }
+        #bracket-wrapper { cursor: grab; overflow: auto; width: 100%; height: 100%; flex: 1; min-height: 0; position: relative; }
         #bracket-wrapper:active { cursor: grabbing; }
         #bracket-wrapper * { user-select: none; }
 
@@ -337,6 +346,8 @@
         };
 
         // --- Drag Scroll Free Movement ---
+        let isDragInitialized = false;
+
         function initDragScroll() {
             const slider = document.getElementById('bracket-wrapper'); if(!slider) return;
             
@@ -350,16 +361,32 @@
                 }
             }, 50);
 
+            // --- เช็คที่ตัว DOM แทนตัวแปร Global ป้องกันบั๊กเวลาเปลี่ยน Tab ---
+            if (slider.dataset.dragInit === "true") return; 
+            slider.dataset.dragInit = "true";
+
             let isDown = false; let startX; let startY; let scrollLeft; let scrollTop;
             slider.addEventListener('mousedown', (e) => { 
                 isDown = true;
+                slider.style.cursor = 'grab';
                 startX = e.clientX; // ใช้ clientX/Y แก้บั๊กลากแนวตั้ง
                 startY = e.clientY; 
                 scrollLeft = slider.scrollLeft; 
                 scrollTop = slider.scrollTop; 
             });
-            slider.addEventListener('mouseleave', () => { isDown = false; });
-            slider.addEventListener('mouseup', () => { isDown = false; });
+            
+            slider.addEventListener('mouseleave', () => { 
+                isDown = false;
+                slider.style.cursor = 'grab';
+                savePosition(slider); 
+            });
+
+            slider.addEventListener('mouseup', () => { 
+                isDown = false; 
+                slider.style.cursor = 'grab';
+                savePosition(slider);
+            });
+
             slider.addEventListener('mousemove', (e) => {
                 if (!isDown) return;
                 e.preventDefault();
@@ -369,7 +396,7 @@
                 const walkY = (y - startY) * 1.5;
                 slider.scrollLeft = scrollLeft - walkX; 
                 slider.scrollTop = scrollTop - walkY;
-            }, { passive: false });
+            });
         }
 
         // --- Helper Components ---
@@ -639,11 +666,11 @@
 
         function renderBracketView() {
             return `
-                <div id="bracket-wrapper" class="relative overflow-auto cursor-grab h-[800px] w-full">
+                <div id="bracket-wrapper" class="relative overflow-auto cursor-grab max-h-[800px] w-full" style="max-height:calc(100vh - 230px);">
                     <!-- ปรับลด h-[1900px] เหลือ h-[1520px] เพื่อตัดช่องว่างด้านบนทิ้งให้กระชับ -->
                     <div class="w-[2800px] h-[1520px] flex items-center justify-center relative m-auto">
                         <svg id="bracket-lines" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></svg>
-                        <div class="flex justify-between items-center w-full relative z-10 px-12 select-none">
+                        <div class="flex justify-between items-center w-full h-full relative z-10 px-12 select-none">
                             <div class="flex gap-12">
                                 <div class="flex flex-col justify-between gap-4 h-[1500px]">${[1,2,3,4,5,6,7,8].map(i => renderMatchNode(`r32_${i}`)).join('')}</div>
                                 <div class="flex flex-col justify-around h-[1500px]">${[1,2,3,4].map(i => renderMatchNode(`r16_${i}`)).join('')}</div>
