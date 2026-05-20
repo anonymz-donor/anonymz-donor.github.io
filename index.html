@@ -92,9 +92,9 @@
         </header>
 
         <nav class="flex gap-4 md:gap-8 mb-8 border-b border-border/50 font-ui px-2 overflow-x-auto whitespace-nowrap">
-            <div id="tab-groups" class="cli-btn" onclick="switchTab('groups')">รอบแบ่งกลุ่ม</div>
+            <div id="tab-groups" class="cli-btn active" onclick="switchTab('groups')">รอบแบ่งกลุ่ม</div>
             <div id="tab-standings" class="cli-btn" onclick="switchTab('standings')">ตารางคะแนนรวม</div>
-            <div id="tab-bracket" class="cli-btn active" onclick="switchTab('bracket')">ผังรอบ 32 ทีม</div>
+            <div id="tab-bracket" class="cli-btn" onclick="switchTab('bracket')">ผังรอบ 32 ทีม</div>
             <div id="tab-predictions" class="cli-btn" onclick="switchTab('predictions')">ข้อมูลผู้เล่น</div>
             <div id="tab-admin" class="cli-btn hidden" onclick="switchTab('admin')">ผู้ดูแลระบบ</div>
         </nav>
@@ -168,7 +168,7 @@
         };
 
         window.appState = {
-            currentTab: 'bracket', user: null, predictions: [], bracket: null, groups: null, standingsOverrides: {}, config: defaultConfig, editingPredictionId: null,
+            currentTab: 'groups', user: null, predictions: [], bracket: null, groups: null, standingsOverrides: {}, config: defaultConfig, editingPredictionId: null,
             avatars: [ '🧑‍🚀','🥷','🧛','🧟','🧙‍♂️','🤖','👽','🤠','😎','🤡','👹','👻','👾','🦊','🦁','🐯','🐼','🐸','🦖','🐙','⚽','🏆','🥇','🚀','🔥','⭐','⚡','👑','💎','🎲','🎯','🔮','🎸','🎧','🍔','🍕','🍺','☕','🚗','🚁' ]
         };
 
@@ -361,14 +361,15 @@
             slider.addEventListener('mouseleave', () => { isDown = false; });
             slider.addEventListener('mouseup', () => { isDown = false; });
             slider.addEventListener('mousemove', (e) => {
-                if (!isDown) return; e.preventDefault();
+                if (!isDown) return;
+                e.preventDefault();
                 const x = e.clientX; 
                 const y = e.clientY;
                 const walkX = (x - startX) * 1.5; 
                 const walkY = (y - startY) * 1.5;
                 slider.scrollLeft = scrollLeft - walkX; 
                 slider.scrollTop = scrollTop - walkY;
-            });
+            }, { passive: false });
         }
 
         // --- Helper Components ---
@@ -578,7 +579,7 @@
                     return st[b].gf - st[a].gf;
                 });
 
-                html += `<div class="bg-panel rounded-xl border border-border overflow-hidden mb-2 shadow-lg"><div class="bg-input/80 px-4 py-3 font-bold text-accent border-b border-border flex justify-between"><span>กลุ่ม ${group}</span></div><table class="w-full text-sm"><thead><tr class="text-muted text-[11px] uppercase bg-base/50"><th class="p-3 text-left">ทีมชาติ</th><th class="p-3 text-center w-12">แข่ง</th><th class="p-3 text-center w-12" title="ได้">GF</th><th class="p-3 text-center w-12" title="เสีย">GA</th><th class="p-3 text-center w-12" title="ผลต่าง">GD</th><th class="p-3 text-center w-16 text-white font-bold">แต้ม</th></tr></thead><tbody class="divide-y divide-border/50">`;
+                html += `<div class="bg-panel rounded-xl overflow-hidden mb-2 shadow-lg"><div class="bg-input/80 px-4 py-3 font-bold text-accent flex justify-between"><span>กลุ่ม ${group}</span></div><table class="w-full text-sm"><thead><tr class="text-muted text-[11px] uppercase bg-base/50"><th class="p-3 text-left">ทีมชาติ</th><th class="p-3 text-center w-12">แข่ง</th><th class="p-3 text-center w-12" title="ได้">GF</th><th class="p-3 text-center w-12" title="เสีย">GA</th><th class="p-3 text-center w-12" title="ผลต่าง">GD</th><th class="p-3 text-center w-16 text-white font-bold">แต้ม</th></tr></thead><tbody class="divide-y divide-border">`;
                 sortedTeams.forEach((t, idx) => { 
                     html += `<tr class="hover:bg-input/30"><td class="p-3"><div class="flex items-center gap-3"><span class="text-muted w-3">${idx+1}</span> ${getFlagImg(t)} <span class="font-medium">${t}</span></div></td>
                     <td class="p-3 text-center"><input type="number" onblur="updateStandingOverride('${t}','pld',this.value)" class="${inputClass}" value="${st[t].pld}" ${window.isAdmin()?'':'readonly'}></td>
