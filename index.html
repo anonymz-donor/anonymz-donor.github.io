@@ -102,10 +102,10 @@
 
         <nav class="flex gap-4 md:gap-8 mb-8 border-b border-border/50 font-ui px-2 overflow-x-auto whitespace-nowrap">
             <div id="tab-groups" class="cli-btn active" onclick="switchTab('groups')">รอบแบ่งกลุ่ม</div>
-            <div id="tab-standings" class="cli-btn" onclick="switchTab('standings')">ตารางคะแนนรวม</div>
-            <div id="tab-bracket" class="cli-btn" onclick="switchTab('bracket')">ผังรอบ 32 ทีม</div>
+            <div id="tab-standings" class="cli-btn" onclick="switchTab('standings')">ตารางคะแนน</div>
+            <div id="tab-bracket" class="cli-btn" onclick="switchTab('bracket')">รอบ 32 ทีม</div>
             <div id="tab-predictions" class="cli-btn" onclick="switchTab('predictions')">ข้อมูลผู้เล่น</div>
-            <div id="tab-admin" class="cli-btn hidden" onclick="switchTab('admin')">ผู้ดูแลระบบ</div>
+            <div id="tab-admin" class="cli-btn hidden" onclick="switchTab('admin')">Admin</div>
         </nav>
 
         <main id="content-area" class="flex-grow rounded-xl relative min-h-[650px] flex flex-col"><div class="m-auto text-accent font-ui text-lg flex items-center gap-3">กำลังโหลดข้อมูล...</div></main>
@@ -153,26 +153,26 @@
         // Default Config
         const defaultConfig = {
             teams: [
-                { name: 'Mexico', code: 'mx' }, { name: 'South Africa', code: 'za' }, { name: 'South Korea', code: 'kr' }, { name: 'Czechia', code: 'cz' },
-                { name: 'Canada', code: 'ca' }, { name: 'France', code: 'fr' }, { name: 'England', code: 'gb-eng' }, { name: 'Japan', code: 'jp' },
-                { name: 'USA', code: 'us' }, { name: 'Portugal', code: 'pt' }, { name: 'Germany', code: 'de' }, { name: 'Morocco', code: 'ma' },
-                { name: 'Argentina', code: 'ar' }, { name: 'Colombia', code: 'co' }, { name: 'Uruguay', code: 'uy' }, { name: 'Brazil', code: 'br' },
-                { name: 'Spain', code: 'es' }, { name: 'Italy', code: 'it' }, { name: 'Netherlands', code: 'nl' }, { name: 'Croatia', code: 'hr' },
-                { name: 'Belgium', code: 'be' }, { name: 'Norway', code: 'no' }, { name: 'Denmark', code: 'dk' }, { name: 'Switzerland', code: 'ch' },
-                { name: 'Poland', code: 'pl' }, { name: 'Ukraine', code: 'ua' }, { name: 'Serbia', code: 'rs' }, { name: 'Hungary', code: 'hu' },
-                { name: 'Austria', code: 'at' }, { name: 'Sweden', code: 'se' }, { name: 'Turkey', code: 'tr' }, { name: 'Australia', code: 'au' },
-                { name: 'Senegal', code: 'sn' }, { name: 'Ecuador', code: 'ec' }, { name: 'Wales', code: 'gb-wls' }, { name: 'Iran', code: 'ir' },
-                { name: 'Saudi Arabia', code: 'sa' }, { name: 'Ghana', code: 'gh' }, { name: 'Cameroon', code: 'cm' }, { name: 'Costa Rica', code: 'cr' },
-                { name: 'Tunisia', code: 'tn' }, { name: 'Peru', code: 'pe' }, { name: 'Chile', code: 'cl' }, { name: 'Nigeria', code: 'ng' },
-                { name: 'Egypt', code: 'eg' }, { name: 'Algeria', code: 'dz' }, { name: 'Ivory Coast', code: 'ci' }, { name: 'Mali', code: 'ml' }
+                { name: 'Mexico', code: 'mx' }, { name: 'South Africa', code: 'za' }, { name: 'South Korea', code: 'kr' }, { name: 'Czechia', code: 'cz' },             // Group A
+                { name: 'Canada', code: 'ca' }, { name: 'Bosnia and Herzegovina', code: 'ba' }, { name: 'Qatar', code: 'qa' }, { name: 'Switzerland', code: 'ch' },     // Group B
+                { name: 'Brazil', code: 'br' }, { name: 'Morocco', code: 'ma' }, { name: 'Haiti', code: 'ht' }, { name: 'Scotland', code: 'gb-sct' },                   // Group C
+                { name: 'USA', code: 'us' }, { name: 'Paraguay', code: 'py' }, { name: 'Australia', code: 'au' }, { name: 'Turkey', code: 'tr' },                       // Group D
+                { name: 'Germany', code: 'de' }, { name: 'Curaçao', code: 'cw' }, { name: 'Ivory Coast', code: 'ci' }, { name: 'Ecuador', code: 'ec' },                 // Group E
+                { name: 'Netherlands', code: 'nl' }, { name: 'Japan', code: 'jp' }, { name: 'Sweden', code: 'se' }, { name: 'Tunisia', code: 'tn' },                  // Group F
+                { name: 'Belgium', code: 'be' }, { name: 'Egypt', code: 'eg' }, { name: 'Iran', code: 'ir' }, { name: 'New Zealand', code: 'nz' },                       // Group G
+                { name: 'Spain', code: 'es' }, { name: 'Cape Verde', code: 'cv' }, { name: 'Saudi Arabia', code: 'sa' }, { name: 'Uruguay', code: 'uy' },                     // Group H
+                { name: 'France', code: 'fr' }, { name: 'Senegal', code: 'sn' }, { name: 'Iraq', code: 'iq' }, { name: 'Norway', code: 'no' },                      // Group I
+                { name: 'Argentina', code: 'ar' }, { name: 'Algeria', code: 'dz' }, { name: 'Austria', code: 'at' }, { name: 'Jordan', code: 'jo' },              // Group J
+                { name: 'Portugal', code: 'pt' }, { name: 'DR Congo', code: 'cd' }, { name: 'Uzbekistan', code: 'uz' }, { name: 'Colombia', code: 'co' },                          // Group K
+                { name: 'England', code: 'gb-eng' }, { name: 'Croatia', code: 'hr' }, { name: 'Ghana', code: 'gh' }, { name: 'Panama', code: 'pa' }                       // Group L
             ],
             groupData: {
-                'A': ['Mexico', 'South Africa', 'South Korea', 'Czechia'], 'B': ['Canada', 'France', 'England', 'Japan'],
-                'C': ['USA', 'Portugal', 'Germany', 'Morocco'], 'D': ['Argentina', 'Colombia', 'Uruguay', 'Brazil'],
-                'E': ['Spain', 'Italy', 'Netherlands', 'Croatia'], 'F': ['Belgium', 'Norway', 'Denmark', 'Switzerland'],
-                'G': ['Poland', 'Ukraine', 'Serbia', 'Hungary'], 'H': ['Austria', 'Sweden', 'Turkey', 'Australia'],
-                'I': ['Senegal', 'Ecuador', 'Wales', 'Iran'], 'J': ['Saudi Arabia', 'Ghana', 'Cameroon', 'Costa Rica'],
-                'K': ['Tunisia', 'Peru', 'Chile', 'Nigeria'], 'L': ['Egypt', 'Algeria', 'Ivory Coast', 'Mali']
+                'A': ['Mexico', 'South Africa', 'South Korea', 'Czechia'], 'B': ['Canada', 'Bosnia and Herzegovina', 'Qatar', 'Switzerland'],
+                'C': ['Brazil', 'Morocco', 'Haiti', 'Scotland'], 'D': ['USA', 'Paraguay', 'Australia', 'Turkey'],
+                'E': ['Germany', 'Curaçao', 'Ivory Coast', 'Ecuador'], 'F': ['Netherlands', 'Japan', 'Sweden', 'Tunisia'],
+                'G': ['Belgium', 'Egypt', 'Iran', 'New Zealand'], 'H': ['Spain', 'Cape Verde', 'Saudi Arabia', 'Uruguay'],
+                'I': ['France', 'Senegal', 'Iraq', 'Norway'], 'J': ['Argentina', 'Algeria', 'Austria', 'Jordan'],
+                'K': ['Portugal', 'DR Congo', 'Uzbekistan', 'Colombia'], 'L': ['England', 'Croatia', 'Ghana', 'Panama'],
             }
         };
 
@@ -196,14 +196,14 @@
                 r32_6: { team1: 'Uruguay', team2: 'Japan', score1: '', score2: '', winner: null, next: 'r16_3', nextSlot: 'team2', date: '30/6, 08:00' },
                 r32_7: { team1: 'Spain', team2: 'Colombia', score1: '', score2: '', winner: null, next: 'r16_4', nextSlot: 'team1', date: '1/7, 02:00' },
                 r32_8: { team1: 'USA', team2: 'Portugal', score1: '', score2: '', winner: null, next: 'r16_4', nextSlot: 'team2', date: '1/7, 08:00' },
-                r32_9: { team1: 'France', team2: 'Canada', score1: '', score2: '', winner: null, next: 'r16_5', nextSlot: 'team1', date: '28/6, 02:00' },
-                r32_10: { team1: 'Italy', team2: 'South Korea', score1: '', score2: '', winner: null, next: 'r16_5', nextSlot: 'team2', date: '28/6, 08:00' },
-                r32_11: { team1: 'England', team2: 'Czechia', score1: '', score2: '', winner: null, next: 'r16_6', nextSlot: 'team1', date: '29/6, 02:00' },
-                r32_12: { team1: 'Germany', team2: 'Morocco', score1: '', score2: '', winner: null, next: 'r16_6', nextSlot: 'team2', date: '29/6, 08:00' },
-                r32_13: { team1: 'Portugal', team2: 'Japan', score1: '', score2: '', winner: null, next: 'r16_7', nextSlot: 'team1', date: '30/6, 02:00' },
-                r32_14: { team1: 'Netherlands', team2: 'South Africa', score1: '', score2: '', winner: null, next: 'r16_7', nextSlot: 'team2', date: '30/6, 08:00' },
-                r32_15: { team1: 'Argentina', team2: 'Mexico', score1: '', score2: '', winner: null, next: 'r16_8', nextSlot: 'team1', date: '1/7, 02:00' },
-                r32_16: { team1: 'Brazil', team2: 'USA', score1: '', score2: '', winner: null, next: 'r16_8', nextSlot: 'team2', date: '1/7, 08:00' },
+                r32_9: { team1: 'France', team2: 'Iraq', score1: '', score2: '', winner: null, next: 'r16_5', nextSlot: 'team1', date: '28/6, 02:00' },
+                r32_10: { team1: 'Norway', team2: 'Switzerland', score1: '', score2: '', winner: null, next: 'r16_5', nextSlot: 'team2', date: '28/6, 08:00' },
+                r32_11: { team1: 'England', team2: 'Uzbekistan', score1: '', score2: '', winner: null, next: 'r16_6', nextSlot: 'team1', date: '29/6, 02:00' },
+                r32_12: { team1: 'Germany', team2: 'Jordan', score1: '', score2: '', winner: null, next: 'r16_6', nextSlot: 'team2', date: '29/6, 08:00' },
+                r32_13: { team1: 'Scotland', team2: 'Qatar', score1: '', score2: '', winner: null, next: 'r16_7', nextSlot: 'team1', date: '30/6, 02:00' },
+                r32_14: { team1: 'Ivory Coast', team2: 'Egypt', score1: '', score2: '', winner: null, next: 'r16_7', nextSlot: 'team2', date: '30/6, 08:00' },
+                r32_15: { team1: 'Iran', team2: 'Algeria', score1: '', score2: '', winner: null, next: 'r16_8', nextSlot: 'team1', date: '1/7, 02:00' },
+                r32_16: { team1: 'Turkey', team2: 'Belgium', score1: '', score2: '', winner: null, next: 'r16_8', nextSlot: 'team2', date: '1/7, 08:00' },
                 r16_1: { team1: null, team2: null, score1: '', score2: '', winner: null, next: 'qf1', nextSlot: 'team1', date: '4/7, 02:00' },
                 r16_2: { team1: null, team2: null, score1: '', score2: '', winner: null, next: 'qf1', nextSlot: 'team2', date: '4/7, 08:00' },
                 r16_3: { team1: null, team2: null, score1: '', score2: '', winner: null, next: 'qf2', nextSlot: 'team1', date: '5/7, 02:00' },
@@ -361,7 +361,7 @@
                 }
             }, 50);
 
-            // --- เช็คที่ตัว DOM แทนตัวแปร Global ป้องกันบั๊กเวลาเปลี่ยน Tab ---
+            // --- เช็คที่ตัว DOM แทนตัวแปร Global ป้องกัน Bug เวลาเปลี่ยน Tab ---
             if (slider.dataset.dragInit === "true") return; 
             slider.dataset.dragInit = "true";
 
@@ -369,7 +369,7 @@
             slider.addEventListener('mousedown', (e) => { 
                 isDown = true;
                 slider.style.cursor = 'grab';
-                startX = e.clientX; // ใช้ clientX/Y แก้บั๊กลากแนวตั้ง
+                startX = e.clientX; // ใช้ clientX/Y แก้ Bug ลากแนวตั้ง
                 startY = e.clientY; 
                 scrollLeft = slider.scrollLeft; 
                 scrollTop = slider.scrollTop; 
@@ -408,7 +408,7 @@
         }
 
         function getAvatarsHTML(teamName) {
-            let html = '<div class="avatar-container">'; // ตัด mt-1 ออกเพื่อลดช่องว่างแนวตั้ง
+            let html = '<div class="avatar-container">';
             if (!teamName) { html += '</div>'; return html; }
             const fans = window.appState.predictions.filter(p => p.teamName === teamName);
             const displayFans = fans.slice(0, 4);
@@ -442,7 +442,7 @@
             try { await updateDoc(doc(db, 'wc_data', 'tournament_bracket'), { [`${nodeId}.${field}`]: v }); } catch (e) { console.error(e); }
         };
 
-        // ฟังก์ชันใหม่สำหรับการเปลี่ยนชื่อทีมแบบ Manual และเคลียร์ข้อมูลทีมปลายทางอัตโนมัติ (Cascade Update)
+        // สำหรับการเปลี่ยนชื่อทีมแบบ Manual และเคลียร์ข้อมูลทีมปลายทางอัตโนมัติ (Cascade Update)
         window.updateBracketTeam = async (nodeId, teamIndex, value) => {
             if (!window.isAdmin()) return;
             const field = teamIndex === 1 ? 'team1' : 'team2';
@@ -451,7 +451,7 @@
 
             let updateData = { [`${nodeId}.${field}`]: value };
             
-            // ถ้าทีมที่ถูกเปลี่ยนชื่อ ดันเป็นผู้ชนะในรอบนี้ ต้องอัปเดตทีมถัดไปด้วย
+            // ถ้าทีมที่ถูกเปลี่ยน ดันเป็นผู้ชนะในรอบนี้ ต้องอัปเดตทีมถัดไปด้วย
             if (node.winner === oldTeam && oldTeam) {
                 updateData[`${nodeId}.winner`] = value;
                 
@@ -564,15 +564,29 @@
             return st;
         }
 
+        // ฟังก์ชันแปลงวันที่เพื่อเพิ่มตัวย่อวันของสัปดาห์อ้างอิงปี 2026
+        function formatMatchDate(dateStr) {
+            if (!dateStr) return '';
+            try {
+                const parts = dateStr.split(', ');
+                if (parts.length !== 2) return dateStr;
+                const dateParts = parts[0].split('/');
+                const day = parseInt(dateParts[0]);
+                const month = parseInt(dateParts[1]) - 1; // JS month 0-indexed
+                const d = new Date(2026, month, day);
+                const dayName = d.toLocaleDateString('en-US', { weekday: 'short' });
+                return `${dayName} ${dateStr}`;
+            } catch(e) { return dateStr; }
+        }
+
         // --- Render Views ---
         function renderGroupsView() {
             const inputClass = window.isAdmin() ? 'bg-base border-border text-white hover:border-accent focus:border-accent' : 'bg-transparent border-transparent text-white pointer-events-none appearance-none';
             let html = `<div class="w-full text-primary font-ui p-4 max-w-5xl mx-auto"><h2 class="text-xl font-bold mb-4 text-white border-b border-border pb-2">รอบแบ่งกลุ่ม (พบกันหมด)</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4">`;
             Object.entries(window.appState.groups || {}).forEach(([group, matches]) => {
                 // ปรับลด margin และ padding ของกล่องกลุ่มให้กระชับ
-                html += `<div class="mb-2 bg-panel p-3 rounded-xl border border-border shadow-lg"><div class="flex justify-between items-center mb-2"><h3 class="text-accent font-bold text-[15px]">กลุ่ม ${group}</h3></div><div class="grid grid-cols-1 gap-1 text-sm">`;
+                html += `<div class="mb-2 bg-panel p-3 rounded-xl border border-border shadow-lg"><div class="flex justify-between items-center mb-2"><h3 class="text-accent font-bold text-[15px]">Group ${group}</h3></div><div class="grid grid-cols-1 gap-1 text-sm">`;
                 matches.forEach((m, idx) => {
-                    // นำเส้นขาวรอบๆ แมตช์ออก และปรับย่อขนาด input/ช่องว่าง
                     html += `<div class="flex flex-col py-1 px-2 rounded-lg hover:bg-input/40 transition-colors">
                         <div class="flex justify-between items-center">
                             <div class="flex items-center justify-start gap-2 w-[40%] text-left">${getFlagImg(m.team1)} <span class="font-medium truncate leading-tight">${m.team1}</span></div>
@@ -597,7 +611,7 @@
         function renderStandingsView() { 
             const st = getComputedStandings();
             const inputClass = window.isAdmin() ? 'bg-base border-border text-center rounded w-8 h-6 text-white text-xs' : 'bg-transparent border-transparent text-center w-8 text-white text-xs pointer-events-none appearance-none';
-            let html = `<div class="w-full text-primary font-ui p-4 max-w-5xl mx-auto"><h2 class="text-xl font-bold mb-6 text-white border-b border-border pb-2">ตารางคะแนนรวม</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6">`;
+            let html = `<div class="w-full text-primary font-ui p-4 max-w-5xl mx-auto"><h2 class="text-xl font-bold mb-6 text-white border-b border-border pb-2">ตารางคะแนน</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6">`;
             
             Object.entries(window.appState.config.groupData).forEach(([group, teams]) => {
                 const sortedTeams = [...teams].sort((a, b) => {
@@ -606,7 +620,7 @@
                     return st[b].gf - st[a].gf;
                 });
 
-                html += `<div class="bg-panel rounded-xl overflow-hidden mb-2 shadow-lg"><div class="bg-input/80 px-4 py-3 font-bold text-accent flex justify-between"><span>กลุ่ม ${group}</span></div><table class="w-full text-sm"><thead><tr class="text-muted text-[11px] uppercase bg-base/50"><th class="p-3 text-left">ทีมชาติ</th><th class="p-3 text-center w-12">แข่ง</th><th class="p-3 text-center w-12" title="ได้">GF</th><th class="p-3 text-center w-12" title="เสีย">GA</th><th class="p-3 text-center w-12" title="ผลต่าง">GD</th><th class="p-3 text-center w-16 text-white font-bold">แต้ม</th></tr></thead><tbody class="divide-y divide-border">`;
+                html += `<div class="bg-panel rounded-xl overflow-hidden mb-2 shadow-lg"><div class="bg-input/80 px-4 py-3 font-bold text-accent flex justify-between"><span>Group ${group}</span></div><table class="w-full text-sm"><thead><tr class="text-muted text-[11px] uppercase bg-base/50"><th class="p-3 text-left">Teams</th><th class="p-3 text-center w-12">P</th><th class="p-3 text-center w-12" title="ได้">GF</th><th class="p-3 text-center w-12" title="เสีย">GA</th><th class="p-3 text-center w-12" title="ผลต่าง">GD</th><th class="p-3 text-center w-16 text-white font-bold">PTS.</th></tr></thead><tbody class="divide-y divide-border">`;
                 sortedTeams.forEach((t, idx) => { 
                     html += `<tr class="hover:bg-input/30"><td class="p-3"><div class="flex items-center gap-3"><span class="text-muted w-3">${idx+1}</span> ${getFlagImg(t)} <span class="font-medium">${t}</span></div></td>
                     <td class="p-3 text-center"><input type="number" onblur="updateStandingOverride('${t}','pld',this.value)" class="${inputClass}" value="${st[t].pld}" ${window.isAdmin()?'':'readonly'}></td>
@@ -645,7 +659,7 @@
 
             return `
                 <div id="box-${nodeId}" class="match-box group">
-                    <div class="text-[11px] text-muted font-ui px-4 py-1 flex items-center border-b border-border bg-[#1a1a20] rounded-t-xl"><span>${node.date}</span></div>
+                    <div class="text-[11px] text-muted font-ui px-4 py-1 flex items-center border-b border-border bg-[#1a1a20] rounded-t-xl"><span>${formatMatchDate(node.date)}</span></div>
                     <div>
                         <div class="team-row ${team1Class} ${adminClass}" onclick="advanceTeam('${nodeId}', 1, event)">
                             <div class="flex flex-col gap-1 w-full">
@@ -721,19 +735,15 @@
         // Leaderboard Calculation
         function calculateLeaderboard() {
             let scores = {}; window.appState.predictions.forEach(p => { scores[p.id] = { ...p, score: 0 }; });
-            Object.values(window.appState.bracket || {}).forEach(match => {
-                if(match.winner) {
-                    window.appState.predictions.forEach(p => {
-                        if(p.teamName === match.winner) {
-                            if(match.next && match.next.startsWith('r16')) scores[p.id].score += 1;
-                            else if(match.next && match.next.startsWith('qf')) scores[p.id].score += 3;
-                            else if(match.next && match.next.startsWith('sf')) scores[p.id].score += 5;
-                            else if(match.next === 'final') scores[p.id].score += 10;
-                            else if(match.next === null) scores[p.id].score += 20; 
-                        }
-                    });
+            const st = getComputedStandings();
+            
+            // อ้างอิงคะแนนมาจากหน้าตารางคะแนน (รอบแบ่งกลุ่ม) เท่านั้น ไม่เกี่ยวกับหน้าผัง 32 ทีม
+            Object.values(scores).forEach(p => {
+                if (st[p.teamName]) {
+                    p.score = st[p.teamName].pts;
                 }
-            }); return Object.values(scores).sort((a,b) => b.score - a.score);
+            });
+            return Object.values(scores).sort((a,b) => b.score - a.score);
         }
 
         function renderPredictionsView() {
@@ -744,14 +754,20 @@
             const btnText = window.appState.editingPredictionId ? 'อัปเดตข้อมูล' : 'บันทึกข้อมูล';
             const btnClass = window.appState.editingPredictionId ? 'bg-success hover:bg-success/80' : 'bg-accent hover:bg-accent-hover';
             const adminMode = window.isAdmin();
+            
+            // เช็คว่า Guest เคยส่งข้อมูลหรือยัง
+            const existingPred = window.appState.predictions.find(p => p.userId === window.appState.user?.uid);
+            const overlayHtml = (!adminMode && existingPred && !window.appState.editingPredictionId) 
+                ? '<div class="absolute inset-0 bg-black/85 z-10 rounded-xl flex items-center justify-center flex-col p-4 text-center border border-success/30"><span class="text-success text-2xl mb-2">✅</span><span class="text-white font-medium">คุณลงทะเบียนแล้ว!<br>(จำกัด 1 สิทธิ์/บัญชี)</span></div>' 
+                : '';
 
             let html = `<div class="p-4 md:p-8 w-full max-w-6xl mx-auto flex flex-col lg:flex-row gap-8">
-                <div class="w-full lg:w-1/3"><h2 class="text-xl font-bold text-primary mb-4">จัดการผู้เล่น ${adminMode?'':'<span class="text-xs bg-danger px-2 py-1 rounded ml-2">READ ONLY</span>'}</h2>
+                <div class="w-full lg:w-1/3"><h2 class="text-xl font-bold text-primary mb-4">${adminMode ? 'จัดการผู้เล่น (Admin)' : 'ลงทะเบียนทายผล'}</h2>
                     <div class="bg-panel border ${adminMode ? 'border-accent/50' : 'border-border'} rounded-xl p-6 shadow-lg relative">
-                        ${!adminMode ? '<div class="absolute inset-0 bg-black/60 z-10 rounded-xl"></div>' : ''}
+                        ${overlayHtml}
                         <div class="flex flex-col gap-4">
                             <div><label class="block text-sm text-secondary mb-1">สัญลักษณ์</label><select id="new-avatar" class="cli-input p-3 rounded-lg w-full text-xl text-center">${avatarOptions}</select></div>
-                            <div><label class="block text-sm text-secondary mb-1">ชื่อผู้เล่น</label><input type="text" id="new-name" placeholder="ระบุชื่อเพื่อน" class="cli-input p-3 rounded-lg w-full"></div>
+                            <div><label class="block text-sm text-secondary mb-1">ชื่อผู้เล่น</label><input type="text" id="new-name" placeholder="ระบุชื่อผู้เล่น" class="cli-input p-3 rounded-lg w-full"></div>
                             <div><label class="block text-sm text-secondary mb-1">ทีมที่เชียร์</label><select id="new-team" class="cli-input p-3 rounded-lg w-full">${teamOptions}</select></div>
                             <button onclick="submitPrediction()" class="w-full ${btnClass} text-white font-semibold py-3 rounded-lg mt-2">${btnText}</button>
                             ${window.appState.editingPredictionId ? `<button onclick="cancelEdit()" class="w-full bg-transparent border border-border text-secondary py-2 rounded-lg mt-1 hover:bg-border">ยกเลิกการแก้ไข</button>` : ''}
@@ -759,23 +775,27 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-2/3"><h2 class="text-xl font-bold text-primary mb-4 flex items-center justify-between"><span>🏆 Leaderboard (จัดอันดับผู้เล่น)</span><span class="text-sm font-normal text-muted">${window.appState.predictions.length} คน</span></h2>
-                    <div class="bg-panel rounded-xl border border-border overflow-hidden shadow-lg"><table class="w-full text-sm"><thead class="bg-input/50"><tr class="text-muted"><th class="w-16 text-center">อันดับ</th><th class="text-left">ผู้เล่น</th><th class="text-left">ทีม</th><th class="text-center w-20">คะแนน</th>${adminMode?'<th class="text-right w-32">จัดการ</th>':''}</tr></thead><tbody class="divide-y divide-border/50">`;
+                    <div class="bg-panel rounded-xl border border-border overflow-hidden shadow-lg"><table class="w-full text-sm"><thead class="bg-input/50"><tr class="text-muted"><th class="w-16 text-center">อันดับ</th><th class="text-left">ผู้เล่น</th><th class="text-left">ทีมปัจจุบัน</th><th class="text-left w-26 text-secondary">ทีมก่อนหน้า</th><th class="text-center w-20">คะแนน</th>${adminMode?'<th class="text-right w-28">จัดการ</th>':''}</tr></thead><tbody class="divide-y divide-border">`;
 
             const leaderboard = calculateLeaderboard();
-            if (leaderboard.length === 0) { html += `<tr><td colspan="5" class="text-center text-muted py-12 italic">ยังไม่มีข้อมูลผู้เล่น</td></tr>`; } 
+            if (leaderboard.length === 0) { html += `<tr><td colspan="${adminMode?6:5}" class="text-center text-muted py-12 italic">ยังไม่มีข้อมูลผู้เล่น</td></tr>`; } 
             else {
                 leaderboard.forEach((p, idx) => {
                     const rankClass = idx === 0 ? 'text-xl font-bold text-yellow-400' : (idx === 1 ? 'text-lg font-bold text-gray-300' : (idx === 2 ? 'text-lg font-bold text-amber-600' : 'text-muted'));
                     const actionHtml = adminMode ? `<div class="flex justify-end gap-2"><button onclick="editPrediction('${p.id}')" class="text-accent hover:underline text-xs">แก้ไข</button><button onclick="deletePrediction('${p.id}')" class="text-danger hover:underline text-xs">ลบ</button></div>` : '';
+                    const prevTeamHtml = p.prevTeamName ? `<div class="flex items-center gap-2">${getFlagImg(p.prevTeamName)} <span class="line-through text-secondary">${p.prevTeamName}</span></div>` : '<span class="text-muted">-</span>';
+                    
                     html += `<tr class="hover:bg-input/30"><td class="text-center py-3 ${rankClass}">${idx+1}</td>
                         <td class="py-3"><div class="flex items-center gap-2 text-lg">${p.avatar} <span class="text-sm text-primary font-medium">${p.userName}</span></div></td>
                         <td class="py-3"><div class="flex items-center gap-2">${getFlagImg(p.teamName)} <span class="text-white">${p.teamName}</span></div></td>
+                        <td class="py-3">${prevTeamHtml}</td>
                         <td class="text-center py-3 font-bold text-accent">${p.score}</td>${adminMode ? `<td class="text-right py-3 px-4">${actionHtml}</td>` : ''}</tr>`;
                 });
             } html += `</tbody></table></div></div></div>`; return html;
         }
 
         window.editPrediction = (id) => {
+            if (!window.isAdmin()) return; // เฉพาะ Admin
             const pred = window.appState.predictions.find(p => p.id === id); if(!pred) return;
             window.appState.editingPredictionId = id;
             renderCurrentTab(); 
@@ -791,13 +811,40 @@
         window.cancelEdit = () => { window.appState.editingPredictionId = null; renderCurrentTab(); };
 
         window.submitPrediction = async () => {
-            if (!window.checkPermission()) return;
+            // เอาหน้าด่าน window.checkPermission() ออก เพื่อให้ Guest ส่งข้อมูลได้
+            if (!window.appState.user) return showModal("ข้อผิดพลาด", "ระบบกำลังเชื่อมต่อ กรุณารอสักครู่");
+
             const nameInput = document.getElementById('new-name'); const name = nameInput.value.trim();
             const avatar = document.getElementById('new-avatar').value; const teamName = document.getElementById('new-team').value;
             if (!name) { nameInput.classList.add('border-danger'); setTimeout(() => nameInput.classList.remove('border-danger'), 1000); return; }
 
             const editId = window.appState.editingPredictionId;
+            const isEditing = !!editId;
+
+            // ตรวจสอบสิทธิ์ (แก้ไขได้เฉพาะ Admin)
+            if (isEditing && !window.isAdmin()) {
+                return showModal("ไม่อนุญาต", "การแก้ไขข้อมูลทำได้เฉพาะผู้ดูแลระบบ");
+            }
+
+            // ตรวจสอบ 1 ชื่อ ต่อ UID สำหรับการสร้างใหม่ (ยกเว้น Admin สร้างให้)
+            if (!isEditing && !window.isAdmin()) {
+                const existingPred = window.appState.predictions.find(p => p.userId === window.appState.user.uid);
+                if (existingPred) {
+                    return showModal("ข้อผิดพลาด", "คุณได้ใช้สิทธิ์ลงทะเบียนไปแล้ว (1 สิทธิ์ต่อผู้ใช้งาน)");
+                }
+            }
+
             const payload = { userName: name, avatar: avatar, teamName: teamName, timestamp: new Date().toISOString() };
+
+            // กรณีแอดมินแก้ไขข้อมูล เก็บประวัติทีมเก่า
+            if (isEditing) {
+                const oldPred = window.appState.predictions.find(p => p.id === editId);
+                if (oldPred && oldPred.teamName !== teamName) {
+                    payload.prevTeamName = oldPred.teamName;
+                } else if (oldPred && oldPred.prevTeamName) {
+                    payload.prevTeamName = oldPred.prevTeamName; // เก็บค่าเก่าไว้ถ้าไม่ได้เปลี่ยนอีก
+                }
+            }
 
             if (isOfflineMode) {
                 if(editId) { const idx = window.appState.predictions.findIndex(p=>p.id===editId); window.appState.predictions[idx] = {...window.appState.predictions[idx], ...payload}; }
@@ -813,7 +860,8 @@
         };
 
         window.deletePrediction = async (id) => {
-            if (!window.checkPermission() || !confirm('ต้องการลบผู้เล่นนี้ใช่หรือไม่?')) return;
+            if (!window.isAdmin()) return showModal("ไม่อนุญาต", "ลบข้อมูลได้เฉพาะผู้ดูแลระบบ");
+            if (!confirm('ต้องการลบผู้เล่นนี้ใช่หรือไม่?')) return;
             if (isOfflineMode) { window.appState.predictions = window.appState.predictions.filter(p => p.id !== id); renderCurrentTab(); return; }
             try { await deleteDoc(doc(db, 'wc_predictions', id)); } catch (e) { showModal("Error", "Delete failed."); }
         };
@@ -837,7 +885,7 @@
             });
 
             return `<div class="p-4 md:p-8 max-w-6xl mx-auto w-full">
-                <div class="mb-8"><h2 class="text-2xl font-bold text-primary mb-2">หน้าจัดการระบบ (ผู้ดูแล)</h2><p class="text-secondary text-sm">ตั้งค่าโครงสร้างทีมรอบแบ่งกลุ่ม และรีเซ็ตการแข่งขัน</p></div>
+                <div class="mb-8"><h2 class="text-2xl font-bold text-primary mb-2">หน้าจัดการระบบ (Admin)</h2><p class="text-secondary text-sm">ตั้งค่าโครงสร้างทีมรอบแบ่งกลุ่ม และรีเซ็ตการแข่งขัน</p></div>
                 
                 <div class="bg-panel border ${window.isAdmin() ? 'border-accent/50' : 'border-border opacity-50'} p-6 rounded-xl relative mb-8">
                     ${!window.isAdmin() ? '<div class="absolute inset-0 bg-black/50 z-10 flex items-center justify-center"><span class="bg-danger text-white px-4 py-2 rounded font-bold shadow-lg">โหมดอ่านอย่างเดียว</span></div>' : ''}
